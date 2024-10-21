@@ -31,9 +31,11 @@ const displayRecipes = () => {
         recipeCard.classList.add('bg-white', 'p-4', 'rounded', 'shadow', 'mb-4');
 
         recipeCard.innerHTML = `
-     <h2 class="text-lg font-bold">${recipe.title}</h2>
+  <h2 class="text-lg font-bold">${recipe.title}</h2>
      <p class="text-sm text-gray-500"><strong>Ingredients: &emsp;</strong>${recipe.Ingredients}</p>
      <p class="text-sm"><strong>Steps:&emsp;</strong>${recipe.Steps}</p>
+     <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2">Edit</button>
+      <button class="bg-red-500 text-white px-2 py-1 rounded mt-2">Delete</button>
 `;
         recipeList.appendChild(recipeCard);
     })
