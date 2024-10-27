@@ -1,77 +1,77 @@
+// .................................Array of Objects..................................................
 const recipes = [
     {
         title: "Spaghetti Bolognese",
-        Ingredients: "Spaghetti, Ground Beef , Tomato Sauce, Onion, Garlic ,Olive Oil",
-        Steps: "1.Boil pasta. 2. Cook Ground Beef. 3. Add Sauce and Garlic. 4. Mix with pasta. ",
-
+        ingredients: "Spaghetti, Ground Beef, Tomato Sauce, Garlic, Onions, Olive Oil",
+        steps: "1. Boil pasta. 2. Cook ground beef. 3. Add sauce and garlic. 4. Mix with pasta."
     },
     {
         title: "Chicken Curry",
-        Ingredients: "Chicken, Curry Powder, Coconut Milk, Onion, Garlic ,Ginger",
-        Steps: "1.Boil pasta. 2. Cook Ground Beef. 3. Add Sauce and Garlic. 4. Mix with pasta. ",
-
+        ingredients: "Chicken, Curry Powder, Coconut Milk, Onions, Garlic, Ginger",
+        steps: "1. Cook chicken. 2. Add onions, garlic, ginger. 3. Add coconut milk and curry powder. 4. Simmer."
     },
     {
         title: "Vegetable Stir-fry",
-        Ingredients: "Brocoli, Carrots, Bell Pepers, Soy sauce, Garlic ,Olive Oil",
-        Steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3.Serve with rice. ",
+        ingredients: "Broccoli, Carrots, Bell Peppers, Soy Sauce, Garlic, Olive Oil",
+        steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
+    },
+];
 
-    }
-
-]
-/**
- * This function displays the list of recipes on the webpage.
- */
+// ..............................................Code to create and Display Recipe Cards........................................
 const displayRecipes = () => {
-    const recipeList = document.querySelector('#recipeList');
-    recipeList.innerHTML = "";
+    const recipelist = document.querySelector("#recipelist");
+    recipelist.innerHTML = "";
 
     recipes.forEach((recipe) => {
-        const recipeCard = document.createElement('div');
-        recipeCard.classList.add('bg-white', 'p-4', 'rounded', 'shadow', 'mb-4');
+        const recipeCard = document.createElement("div");
+        recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "m-4");
 
         recipeCard.innerHTML = `
-  <h2 class="text-lg font-bold">${recipe.title}</h2>
-     <p class="text-sm text-gray-500"><strong>Ingredients: &emsp;</strong>${recipe.Ingredients}</p>
-     <p class="text-sm"><strong>Steps:&emsp;</strong>${recipe.Steps}</p>
-     <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2">Edit</button>
-      <button class="bg-red-500 text-white px-2 py-1 rounded mt-2">Delete</button>
-`;
-        recipeList.appendChild(recipeCard);
-    })
+        <h2 class="text-lg font-bold">${recipe.title}</h2>
+        <p class="text-sm text-gray-400 font-thin"><strong>Ingredients: </strong>${recipe.ingredients}</p>
+        <p class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</p>
+        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2">Edit</button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded m-2">Delete</button>
+        `;
+        recipelist.appendChild(recipeCard);
+    });
 }
 
-const addRecipe = () => {
-    const recipeTittleInput = document.querySelector('#recipeTitle');
-    const recipeIngredientsInput = document.querySelector('#recipeIngredients');
-    const recipeStepsInput = document.querySelector('#recipeSteps');
+// ..............................................Code to Add Recipe........................................
+const addRecipe = (event) => {
+    event.preventDefault();
+    const recipeTitle = document.getElementById("recipeTitle").value.trim();
+    const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
+    const recipeStep = document.getElementById("recipeStep").value.trim();
 
-    const recipeTittle = recipeTittleInput.value.trim();
-    const recipeIngredients = recipeIngredientsInput.value.trim();
-    const recipeSteps = recipeStepsInput.value.trim();
+    if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
+        const isDuplicated = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
+        if (isDuplicated) {
+            alert("Recipe already exists");
+        } else {
+            const newRecipe = {
+                title: recipeTitle,
+                ingredients: recipeIngredients,
+                steps: recipeStep,
+            };
+            recipes.push(newRecipe);
 
-    if(recipeTittle !== "" && recipeIngredients !== "" && recipeSteps !== ""){
-        const newRecipe = {
-            title: recipeTittle,
-            Ingredients: recipeIngredients,
-            Steps: recipeSteps
-        
+            document.getElementById("recipeTitle").value = "";
+            document.getElementById("recipeIngredients").value = "";
+            document.getElementById("recipeStep").value = "";
+
+            displayRecipes();
         }
-recipes.push(newRecipe);
- 
-
-recipeTittleInput.value="";
-recipeIngredientsInput.value="";
-recipeStepsInput.value="";
-
-        displayRecipes();
-
-    }else{
-        alert('Please fill out all fields');
+    } else {
+        alert("Please fill out all the fields");
     }
 }
 
+// ..............................................Code to make Add Recipe Button Functional........................................
+document.querySelector("#addRecipe").addEventListener("click", addRecipe);
+
 displayRecipes();
+
 
 const addRecipeBtn = document.querySelector('#addRecipe');
 addRecipeBtn.addEventListener('click', addRecipe);
